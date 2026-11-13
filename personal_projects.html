@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal projects | Sai Thiha Naing</title>
+  <meta name="description" content="Personal projects by Sai Thiha Naing: AI-powered bots, data analysis and web builds.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="name" href="index.html">Sai Thiha Naing</a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="index.html#experience">Experience</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="index.html#skills">Skills</a>
+      <a href="index.html#education">Education</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <p class="crumb"><a href="index.html">Home</a> / Personal projects</p>
+    <h1 class="page-title">Personal projects</h1>
+    <p class="page-intro">Things I built on my own time, including two bots I use myself.</p>
+
+    <ul class="rows">
+      <li class="row">
+        <span class="marker marker--magenta" aria-hidden="true"></span>
+        <div class="row-main">
+          <h2 class="row-title">Finance bot</h2>
+          <p class="row-desc">Telegram bot for tracking expenses. A local LLM (Qwen 2.5 on Ollama) reads messages like "grab 12.40" and files them in SQLite. Two users, each with their own database, currency and timezone, plus an admin role. The language model runs on my own machine, not in the cloud.</p>
+        </div>
+        <span></span>
+        <p class="row-meta">Python · Ollama · SQLite · Telegram API</p>
+      </li>
+      <li class="row">
+        <span class="marker marker--green" aria-hidden="true"></span>
+        <div class="row-main">
+          <h2 class="row-title">LinkedIn post assistant</h2>
+          <p class="row-desc">I send rough notes and photos to a Telegram bot. It drafts a post in my voice with Claude, I ask for changes, and an automatic check looks for typos, confidential details and photo problems. It only posts through the LinkedIn API after I approve, either now or on the weekly schedule.</p>
+        </div>
+        <span></span>
+        <p class="row-meta">Python · Claude API · LinkedIn API · Telegram API</p>
+      </li>
+      <li class="row">
+        <span class="marker marker--blue" aria-hidden="true"></span>
+        <div class="row-main">
+          <h2 class="row-title">F1 2025 Singapore GP analysis</h2>
+          <p class="row-desc">Collected lap-time, sector, pit-stop and weather data from the official F1 APIs, cleaned it, and explored it with pandas and SQL. The charts show which tyre strategies paid off and how humidity changed lap times.</p>
+        </div>
+        <div class="row-links"><a href="https://f1-analysis-by-zwe-sai.streamlit.app/" target="_blank" rel="noopener noreferrer">Live app ↗</a></div>
+        <p class="row-meta">Python · pandas · SQL · Matplotlib · Streamlit</p>
+      </li>
+      <li class="row">
+        <span class="marker marker--magenta" aria-hidden="true"></span>
+        <div class="row-main">
+          <h2 class="row-title">Photo gallery</h2>
+          <p class="row-desc">Photo sharing app with multi-file upload, search and role-based access. Images are resized in the background with Celery, which halved page-load time.</p>
+        </div>
+        <span></span>
+        <p class="row-meta">Flask · Jinja · SQLite · Celery · JavaScript</p>
+      </li>
+      <li class="row">
+        <span class="marker marker--green" aria-hidden="true"></span>
+        <div class="row-main">
+          <h2 class="row-title">FlipFun</h2>
+          <p class="row-desc">Turns a photo from your camera or an upload into black-and-white pixel art with Floyd–Steinberg dithering, then reveals it on a split-flap board that flips row by row. Plain HTML, CSS and JavaScript with no dependencies.</p>
+        </div>
+        <div class="row-links"><a href="https://github.com/SAITHIHANAING1/FlipFun" target="_blank" rel="noopener noreferrer">Code ↗</a></div>
+        <p class="row-meta">JavaScript · Canvas · image processing</p>
+      </li>
+    </ul>
+
+    <div class="more-links">
+      <a href="index.html#projects">← Back to home</a>
+      <a href="academic_projects.html">School projects →</a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <span>© 2026 Sai Thiha Naing</span>
+    <nav aria-label="Footer">
+      <a href="https://www.linkedin.com/in/sai-thiha-naing" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://github.com/SAITHIHANAING1" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="mailto:6695nai@gmail.com">Email</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

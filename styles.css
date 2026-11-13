@@ -1,0 +1,260 @@
+/* "Annotated": the look of a computer-vision labeling tool.
+   Light canvas, hairline rules, annotation class colours as the only accents. */
+:root {
+  --bg: #fbfbfa;
+  --ink: #1b1d22;
+  --ink-2: #3e424b;
+  --dim: #6a6f7a;
+  --line: #e4e5e8;
+  --frame: #eceef1;
+  --blue: #2b59ff;
+  --magenta: #d6336c;
+  --green: #0f9d74;
+  --on-tag: #ffffff;
+
+  --font: 'Schibsted Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'DM Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+
+  --step-0: 1rem;
+  --step-1: 1.125rem;
+  --step-2: 1.5rem;
+  --step-hero: clamp(2.1rem, 5.2vw, 3.6rem);
+  --gutter: 16px;
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; text-decoration-color: var(--dim); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { color: var(--blue); text-decoration-color: currentColor; }
+a:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+
+.wrap {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+
+/* ---------- Header ---------- */
+.site-head .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px 24px;
+  padding-block: 22px;
+  font-family: var(--mono);
+  font-size: 0.875rem;
+}
+.site-head .name { font-weight: 500; text-decoration: none; }
+.site-nav { display: flex; flex-wrap: wrap; gap: 6px 20px; color: var(--dim); }
+.site-nav a { text-decoration: none; }
+
+/* ---------- Hero ---------- */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+  gap: 48px;
+  align-items: center;
+  padding-block: 40px 56px;
+}
+.hero-text { min-width: 0; }
+.hero h1 {
+  font-size: var(--step-hero);
+  line-height: 1.12;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin: 14px 0 18px;
+  text-wrap: balance;
+}
+.hero .lede { color: var(--ink-2); max-width: 56ch; margin: 0 0 22px; font-size: var(--step-1); }
+.hero-links { display: flex; flex-wrap: wrap; gap: 8px 22px; font-family: var(--mono); font-size: 0.9rem; }
+
+/* Annotated word in the headline */
+.tag {
+  position: relative;
+  display: inline-block;
+  outline: 2px solid var(--blue);
+  outline-offset: 4px;
+  margin-inline: 4px;
+}
+.tag::after {
+  content: attr(data-label);
+  content: attr(data-label) / ""; /* decorative: keep it out of the headline's spoken text */
+  position: absolute;
+  /* Sits inside the box's top-left corner, like a labeling tool does when
+     there is no room above; "see" has no ascenders, so it clears the letters. */
+  left: -6px;
+  top: -6px;
+  font: 500 0.65rem/1 var(--mono);
+  letter-spacing: 0;
+  background: var(--blue);
+  color: var(--on-tag);
+  padding: 3px 5px;
+}
+
+/* Photo with detection boxes */
+.frame {
+  position: relative;
+  margin: 26px 0 0;
+  aspect-ratio: 637 / 720;
+  max-width: 100%;
+  background: var(--frame);
+}
+.frame img { width: 100%; height: 100%; object-fit: cover; }
+.box {
+  position: absolute;
+  border: 2px solid var(--box, var(--blue));
+  pointer-events: none;
+}
+.box::before {
+  content: attr(data-label);
+  position: absolute;
+  left: -2px;
+  top: -21px;
+  font: 500 0.7rem/1 var(--mono);
+  white-space: nowrap;
+  background: var(--box, var(--blue));
+  color: var(--on-tag);
+  padding: 4px 6px;
+}
+.box--blue { --box: var(--blue); }
+.box--magenta { --box: var(--magenta); }
+.box--green { --box: var(--green); }
+.box--person { inset: 3% 1% 0 1%; }
+.box--face { top: 6%; bottom: 40%; left: 27%; right: 27%; }
+/* Face label hangs below its box so it never covers the person label. */
+.box--face::before { top: auto; bottom: -21px; }
+
+/* Optional draw-in, added by script.js. Content is visible without it. */
+@media (prefers-reduced-motion: no-preference) {
+  .frame.is-drawn .box { animation: box-in 600ms cubic-bezier(.2, .7, .2, 1) both; }
+  .frame.is-drawn .box--face { animation-delay: 250ms; }
+}
+@keyframes box-in {
+  from { clip-path: inset(0 100% 100% 0); }
+  to { clip-path: inset(-30px -10px -30px -10px); }
+}
+
+/* ---------- Sections ---------- */
+.section {
+  padding-block: 44px;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 16px 40px;
+}
+.section-label, .section .section-label {
+  font: 500 0.75rem/1.4 var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--dim);
+  margin: 6px 0 0;
+}
+.contact-title { font-size: var(--step-2); line-height: 1.2; margin: 0 0 12px; letter-spacing: -0.01em; }
+.section-body { min-width: 0; }
+
+/* Rows: projects and experience */
+.rows { display: grid; margin: 0; padding: 0; list-style: none; }
+.row {
+  display: grid;
+  grid-template-columns: 12px minmax(0, 1fr) auto;
+  gap: 4px 14px;
+  padding-block: 16px;
+  border-bottom: 1px solid var(--line);
+  align-items: baseline;
+}
+.row:first-child { padding-top: 0; }
+.marker { width: 10px; height: 10px; border-radius: 2px; background: var(--blue); transform: translateY(1px); }
+.marker--blue { background: var(--blue); }
+.marker--magenta { background: var(--magenta); }
+.marker--green { background: var(--green); }
+.row-main { min-width: 0; }
+.row-title { font-size: var(--step-1); font-weight: 700; margin: 0; line-height: 1.35; }
+.row-sub { font: 0.85rem var(--mono); color: var(--dim); margin: 2px 0 0; }
+.row-desc { color: var(--ink-2); margin: 6px 0 0; max-width: 64ch; }
+.row-meta {
+  grid-column: 2 / -1;
+  font: 0.8rem/1.6 var(--mono);
+  color: var(--dim);
+  margin: 6px 0 0;
+}
+.row-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  font: 0.85rem var(--mono);
+  white-space: nowrap;
+  justify-content: flex-end;
+}
+.row-note {
+  grid-column: 2 / -1;
+  font: 0.8rem var(--mono);
+  color: var(--magenta);
+  margin: 2px 0 0;
+}
+.more-links { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 20px; font-family: var(--mono); font-size: 0.9rem; }
+
+/* Skills */
+.skills { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 12px 28px; margin: 0; }
+.skills dt { font: 500 0.85rem/1.6 var(--mono); color: var(--dim); padding-top: 2px; }
+.skills dd { margin: 0; }
+
+/* Education */
+.edu { display: grid; gap: 18px; margin: 0; padding: 0; list-style: none; }
+.edu h3 { font-size: var(--step-1); margin: 0; }
+.edu p { margin: 2px 0 0; color: var(--ink-2); }
+.edu .when { font: 0.85rem var(--mono); color: var(--dim); font-variant-numeric: tabular-nums; }
+.certs { margin: 28px 0 0; padding: 0 0 0 1.1em; color: var(--ink-2); columns: 2 260px; column-gap: 32px; }
+.certs li { margin-bottom: 6px; break-inside: avoid; }
+
+/* Contact */
+.contact p { margin: 0 0 10px; color: var(--ink-2); max-width: 56ch; }
+.contact .email { font-family: var(--mono); font-size: var(--step-2); color: var(--ink); word-break: break-all; }
+
+/* Breadcrumb on project pages */
+.crumb { font: 0.85rem var(--mono); color: var(--dim); padding-block: 28px 8px; }
+.crumb a { text-decoration: none; }
+.page-title { font-size: clamp(2rem, 4.5vw, 3rem); line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 8px; }
+.page-intro { color: var(--ink-2); margin: 0 0 36px; max-width: 60ch; }
+
+/* ---------- Footer ---------- */
+.site-foot .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-block: 28px 40px;
+  border-top: 1px solid var(--line);
+  font: 0.85rem var(--mono);
+  color: var(--dim);
+}
+.site-foot nav { display: flex; gap: 18px; }
+
+/* ---------- Narrow screens ---------- */
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; gap: 28px; padding-block: 24px 44px; }
+  .hero .frame { max-width: 260px; }
+  .tag::after { font-size: 0.55rem; padding: 2px 4px; top: -5px; left: -5px; }
+  .section { grid-template-columns: 1fr; gap: 12px; padding-block: 36px; }
+  .row { grid-template-columns: 12px minmax(0, 1fr); }
+  .row-links { grid-column: 2; justify-content: flex-start; }
+  .skills { grid-template-columns: 1fr; gap: 2px; }
+  .skills dd { margin-bottom: 12px; }
+}

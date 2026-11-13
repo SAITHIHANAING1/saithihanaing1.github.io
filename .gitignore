@@ -1,0 +1,12 @@
+# Python / OS / IDE
+__pycache__/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Brainstorm mockups
+.superpowers/
+
+# Private words for the checker (never commit)
+tests/banned_local.txt
