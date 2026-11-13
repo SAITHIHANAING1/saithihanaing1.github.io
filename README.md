@@ -28,30 +28,25 @@ Rules for content: no private project names (listed in the untracked `tests/bann
 and nothing about the Japfa computer vision project beyond the tool stack until Japfa says it can
 be shared. The checker also scans every file that would be pushed, not just the pages.
 
-## Publish on GitHub Pages
-The local history contains an old version of the site with a phone number, so publish a fresh
-history with one commit instead of pushing this branch.
+## Live site
+https://saithihanaing1.github.io/ (repo `SAITHIHANAING1/saithihanaing1.github.io`,
+GitHub Pages from `main`, root folder).
 
-1. Run `python tests/check_site.py` and make sure it prints `OK`.
-2. Create an empty public repo on GitHub, for example `SAITHIHANAING1/portfolio`.
-3. Publish a clean copy with no history:
-   ```
-   git checkout --orphan publish
-   git add -A
-   git commit -m "Portfolio site"
-   git remote add origin https://github.com/SAITHIHANAING1/portfolio.git
-   git push -u origin publish:main
-   ```
-4. In the repo: **Settings → Pages → Build and deployment**, source **Deploy from a branch**,
-   branch `main`, folder `/ (root)`. The site appears at
-   `https://saithihanaing1.github.io/portfolio/` after a minute.
-5. If you named the repo something other than `portfolio`, update `og:image` and `og:url` in
-   `index.html` so LinkedIn shows your photo in the link preview.
+## Updating the site
+Work on the local branch `publish`, which tracks `origin/main`. The other local branches
+contain an old version of the site with a phone number in their history, so never push them.
 
-## Add the student domain
-1. Claim the free domain from the GitHub Student Developer Pack
-   (https://education.github.com/pack), for example on Name.com or Namecheap.
-2. In the repo: **Settings → Pages → Custom domain**, enter the domain (e.g. `saithihanaing.dev`)
+```
+python tests/check_site.py   # must print OK
+git add -A
+git commit -m "Describe the change"
+git push
+```
+The live site updates about a minute after the push.
+
+## Add a custom domain later
+1. Buy the domain (Cloudflare Registrar sells `.com` at cost, about US$10–11 a year).
+2. In the repo: **Settings → Pages → Custom domain**, enter the domain (e.g. `saithihanaing.com`)
    and save. GitHub commits a `CNAME` file for you.
 3. At the registrar, add the DNS records:
    - Four `A` records for the bare domain (`@`):
